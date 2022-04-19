@@ -19,6 +19,7 @@ namespace GraphsAlgorithms.ViewModel
         GraphElipse _g1;
         GraphElipse _g2;
         public ObservableCollection<GraphElipse> Elipses { get; set; }
+        public List<int[]> DataMatrix { get; set; }
         public ObservableCollection<Edge> Edges => _graph.Edges;
         public bool InLineMode
         {
@@ -37,9 +38,11 @@ namespace GraphsAlgorithms.ViewModel
         }
         public GraphDisplayModel()
         {
-            _graph = new GraphModel();
+            Service.gm = this;
+            _graph = Service.mw.graphModel;
             Elipses = new ObservableCollection<GraphElipse>();
             InLineMode = false;
+            DataMatrix = new List<int[]>();
         }
         public DelegateCommand LeftMouseClick
         {
@@ -68,6 +71,7 @@ namespace GraphsAlgorithms.ViewModel
                             _g2 = Elipse;
                             _graph.AddEdge(OneGraphElipseMemory.MainVertex, TwoGraphElipseMemory.MainVertex);
                             ClearMemory();
+                            Service.mw.FillMatrix();
                         }
                     }
                     return;
@@ -83,6 +87,7 @@ namespace GraphsAlgorithms.ViewModel
             TwoGraphElipseMemory = null;
             InLineMode = false;
         }
+        
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
