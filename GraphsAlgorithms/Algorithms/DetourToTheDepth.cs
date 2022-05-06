@@ -1,37 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace GraphsAlgorithms.Algorithms
+namespace GraphsAlgorithms.Algorithms;
+
+internal class DetourToTheDepth : IAlgorithm
 {
-    class DetourToTheDepth : IAlgorithm
+    private string _result;
+
+    public string GetResult()
     {
-        string _result;
-        public string GetResult()
+        return _result;
+    }
+
+    public void Perform(int BeginList, List<List<int>> Data)
+    {
+        var depth = "";
+        var st = new Stack<int>();
+        st.Push(BeginList);
+        while (st.Count > 0)
         {
-            return _result;
+            var currentNumber = st.Pop();
+            depth += currentNumber;
+            for (var i = 0; i < Data[currentNumber - 1].Count; i++)
+                if (Data[currentNumber - 1][i] == 1)
+                    if (depth.IndexOf((i + 1).ToString()) == -1 && !st.Contains(i + 1))
+                        st.Push(i + 1);
         }
 
-        public void Perform(int BeginList, List<List<int>> Data)
-        {
-            string depth = "";
-            Stack<int> st = new Stack<int>();
-            st.Push(BeginList);
-            while (st.Count > 0)
-            {
-                int currentNumber = st.Pop();
-                depth += currentNumber;
-                for (int i = 0; i < Data[currentNumber - 1].Count; i++)
-                {
-                    if (Data[currentNumber - 1][i] == 1)
-                    {
-                        if (depth.IndexOf((i + 1).ToString()) == -1 && !st.Contains(i + 1)) st.Push(i + 1);
-                    }
-                }
-            }
-            _result = depth;
-        }
+        _result = depth;
     }
 }

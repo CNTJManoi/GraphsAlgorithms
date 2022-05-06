@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace GraphsAlgorithms.Algorithms
+namespace GraphsAlgorithms.Algorithms;
+
+internal interface IAlgorithm
 {
-    interface IAlgorithm
-    {
-        public string GetResult();
-        public void Perform(int BeginList, List<List<int>> Data);
-
-    }
+    public string GetResult();
+    public void Perform(int BeginList, List<List<int>> Data);
 }

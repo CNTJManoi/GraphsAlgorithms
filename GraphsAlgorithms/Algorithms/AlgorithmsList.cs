@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace GraphsAlgorithms.Algorithms;
 
-namespace GraphsAlgorithms.Algorithms
+class AlgorithmsList
 {
-    class AlgorithmsList
+    public AlgorithmsList()
     {
-        IAlgorithm _bypassInWidth;
-        IAlgorithm _detourToTheDepth;
-        public AlgorithmsList()
-        {
-            _bypassInWidth = new BypassInWidth();
-            _detourToTheDepth = new DetourToTheDepth();
-        }
-        public IAlgorithm BypassInWidth { get { return _bypassInWidth; } }
-        public IAlgorithm DetourToTheDepth { get { return _detourToTheDepth; } }
+        BypassInWidth = new BypassInWidth();
+        DetourToTheDepth = new DetourToTheDepth();
     }
+
+    public IAlgorithm BypassInWidth { get; }
+
+    public IAlgorithm DetourToTheDepth { get; }
 }
