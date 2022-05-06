@@ -22,9 +22,9 @@ namespace GraphsAlgorithms.Model.Graph
             _vertexs.Add(new Vertex(point.X, point.Y));
             return Vertexs.Last();
         }
-        public Edge AddEdge(Vertex v1, Vertex v2)
+        public Edge AddEdge(Vertex v1, Vertex v2, float weight)
         {
-            _edges.Add(new Edge(v1, v2));
+            _edges.Add(new Edge(v1, v2, weight));
             return Edges.Last();
         }
         public List<Vertex> Vertexs { get { return _vertexs; } }

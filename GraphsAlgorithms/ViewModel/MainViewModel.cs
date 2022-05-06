@@ -1,6 +1,8 @@
 ﻿using GraphsAlgorithms.Command;
 using GraphsAlgorithms.Model;
 using GraphsAlgorithms.Model.Graph;
+using GraphsAlgorithms.Algorithms;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +17,7 @@ namespace GraphsAlgorithms.ViewModel
     class MainViewModel : INotifyPropertyChanged
     {
         GraphModel _graph;
+        AlgorithmsList _algorithms;
         DelegateCommand _buttonClick;
         public List<List<int>> DataMatrix { get; set; }
         public ObservableCollection<int> ComboBoxList { get; set; }
@@ -24,6 +27,7 @@ namespace GraphsAlgorithms.ViewModel
         public MainViewModel()
         {
             Service.mw = this;
+            _algorithms = new AlgorithmsList();
             graphModel = new GraphModel();
             DataMatrix = new List<List<int>>();
             ComboBoxList = new ObservableCollection<int>();
@@ -86,41 +90,13 @@ namespace GraphsAlgorithms.ViewModel
         }
         string WidthGo(int BeginList, List<List<int>> Data)
         {
-            string width = "";
-            Queue<int> que = new Queue<int>();
-            que.Enqueue(BeginList);
-            while (que.Count > 0)
-            {
-                int currentNumber = que.Dequeue();
-                width += currentNumber;
-                for (int i = 0; i < Data[currentNumber - 1].Count; i++)
-                {
-                    if (Data[currentNumber - 1][i] == 1)
-                    {
-                        if (width.IndexOf((i + 1).ToString()) == -1 && !que.Contains(i + 1)) que.Enqueue(i + 1);
-                    }
-                }
-            }
-            return width;
+            _algorithms.BypassInWidth.Perform(BeginList, Data);
+            return _algorithms.BypassInWidth.GetResult();
         }
         string DepthGo(int BeginList, List<List<int>> Data)
         {
-            string depth = "";
-            Stack<int> st = new Stack<int>();
-            st.Push(BeginList);
-            while (st.Count > 0)
-            {
-                int currentNumber = st.Pop();
-                depth += currentNumber;
-                for (int i = 0; i < DataMatrix[currentNumber - 1].Count; i++)
-                {
-                    if (DataMatrix[currentNumber - 1][i] == 1)
-                    {
-                        if (depth.IndexOf((i + 1).ToString()) == -1 && !st.Contains(i + 1)) st.Push(i + 1);
-                    }
-                }
-            }
-            return depth;
+            _algorithms.DetourToTheDepth.Perform(BeginList, Data);
+            return _algorithms.DetourToTheDepth.GetResult();
         }
         public GraphModel graphModel { get { return _graph; } private set { _graph = value; } }
         public event PropertyChangedEventHandler? PropertyChanged;

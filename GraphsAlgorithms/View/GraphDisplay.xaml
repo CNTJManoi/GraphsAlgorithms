@@ -17,18 +17,20 @@
                     <Canvas Name="TargetCanvas" Background="Transparent">
                         <Canvas.InputBindings>
                             <MouseBinding Gesture="LeftClick" Command="{Binding LeftMouseClick}" CommandParameter="{Binding ElementName=TargetCanvas}"/>
+                            <MouseBinding Gesture="RightClick" Command="{Binding RightMouseClick}" CommandParameter="{Binding ElementName=TargetCanvas}"/>
                         </Canvas.InputBindings>
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Path Stroke="Black" StrokeThickness="2">
+                    <Grid>  
+                        <Path Stroke="Black" StrokeThickness="2" Panel.ZIndex="1">
                             <Path.Data>
                                 <LineGeometry StartPoint="{Binding BeginPoint}" EndPoint="{Binding EndPoint}"></LineGeometry>
                             </Path.Data>
                         </Path>
+                        <TextBox Text="{Binding Weight}" Margin="{Binding GetMarginCenter}" Background="#00000000" BorderBrush="#00000000"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -59,6 +61,6 @@
             </ItemsControl.ItemTemplate>
             
         </ItemsControl>
-        
+       
     </Grid>
 </UserControl>

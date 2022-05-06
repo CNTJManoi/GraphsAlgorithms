@@ -31,7 +31,6 @@ namespace GraphsAlgorithms.Model
             p.Bottom = 0;
             p.Right = 0;
             GetMargin = p;
-
             Text = text;
 
         }
