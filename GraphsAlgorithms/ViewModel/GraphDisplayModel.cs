@@ -110,7 +110,7 @@ internal class GraphDisplayModel : INotifyPropertyChanged
     }
     public void DrawArrow(Point a, Point b)
     {
-        double HeadWidth = 20; // Ширина между ребрами стрелки
+        double HeadWidth = 30; // Ширина между ребрами стрелки
         double HeadHeight = 10; // Длина ребер стрелки
 
         double X1 = a.X;
