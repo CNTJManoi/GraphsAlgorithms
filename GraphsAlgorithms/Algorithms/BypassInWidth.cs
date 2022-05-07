@@ -21,7 +21,7 @@ internal class BypassInWidth : IAlgorithm
             var currentNumber = que.Dequeue();
             width += currentNumber;
             for (var i = 0; i < Data[currentNumber - 1].Count; i++)
-                if (Data[currentNumber - 1][i] == 1)
+                if (Data[currentNumber - 1][i] > 0)
                     if (width.IndexOf((i + 1).ToString()) == -1 && !que.Contains(i + 1))
                         que.Enqueue(i + 1);
         }

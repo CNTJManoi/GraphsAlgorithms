@@ -7,9 +7,31 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
-        <ViewModel:GraphDisplayModel />
+        <ViewModel:GraphDisplayModel/>
     </UserControl.DataContext>
     <Grid x:Name="TargetGrid" Background="#00000000">
+        <ItemsControl ItemsSource="{Binding Arrows}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Name="TargetCanvas" Background="Transparent">
+                        <Canvas.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding LeftMouseClick}"
+                                          CommandParameter="{Binding ElementName=TargetCanvas}" />
+                            <MouseBinding Gesture="RightClick" Command="{Binding RightMouseClick}"
+                                          CommandParameter="{Binding ElementName=TargetCanvas}" />
+                        </Canvas.InputBindings>
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Polyline Points="{Binding Points}" Fill="Black"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
         <ItemsControl ItemsSource="{Binding Edges}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -66,5 +88,12 @@
 
         </ItemsControl>
 
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+            <Label Content="Вершина от " HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+            <TextBlock Text="{Binding OneTextBox}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18"/>
+            <Label Content=" к " FontSize="18"/>
+            <TextBlock Text="{Binding TwoTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -21,7 +21,7 @@ internal class DetourToTheDepth : IAlgorithm
             var currentNumber = st.Pop();
             depth += currentNumber;
             for (var i = 0; i < Data[currentNumber - 1].Count; i++)
-                if (Data[currentNumber - 1][i] == 1)
+                if (Data[currentNumber - 1][i] > 0)
                     if (depth.IndexOf((i + 1).ToString()) == -1 && !st.Contains(i + 1))
                         st.Push(i + 1);
         }

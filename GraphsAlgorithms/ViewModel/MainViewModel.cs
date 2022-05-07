@@ -49,8 +49,17 @@ internal class MainViewModel : INotifyPropertyChanged
         {
             var one = graphModel.Vertexs.IndexOf(edge.Vertex1);
             var two = graphModel.Vertexs.IndexOf(edge.Vertex2);
-            matrix[one, two] = 1;
-            matrix[two, one] = 1;
+            int weight = int.Parse(edge.Weight);
+            if (weight != 0)
+            {
+                matrix[one, two] = int.Parse(edge.Weight);
+                matrix[two, one] = int.Parse(edge.Weight);
+            }
+            else
+            {
+                matrix[one, two] = 1;
+                matrix[two, one] = 1;
+            }
         }
 
         DataMatrix = new List<List<int>>();
