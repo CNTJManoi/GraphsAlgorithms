@@ -27,28 +27,61 @@
                        Margin="0,5,0,0" />
             <DataGrid HeadersVisibility="None" IsReadOnly="True"
                       dataGrid2D:ItemsSource.RowsSource="{Binding DataMatrix}" Height="250" Margin="5,5,5,5" />
-            <TextBlock Text="Обход графа в ширину и глубину" FontSize="16" HorizontalAlignment="Center"
+            <TabControl SelectedIndex="{Binding SelectedIndexMenu}">
+                <TabItem Header="Ширина и глубина">
+                    <StackPanel>
+                        <TextBlock Text="Обход графа в ширину и глубину" FontSize="16" HorizontalAlignment="Center"
                        Margin="0,10,0,10" VerticalAlignment="Center" />
-            <DockPanel>
-                <ComboBox SelectedItem="{Binding SelectedItemCombo}" x:Name="SelectNumber" HorizontalAlignment="Center"
+                        <DockPanel>
+                            <ComboBox SelectedItem="{Binding SelectedItemCombo}" x:Name="SelectNumber" HorizontalAlignment="Center"
                           VerticalAlignment="Stretch" Margin="50,0,0,0" SelectedIndex="0" FontSize="14" Width="134.9"
                           ItemsSource="{Binding ComboBoxList}" />
-            </DockPanel>
-            <DockPanel Margin="0,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Button Command="{Binding ButtonBegins}" Content="Начать магию" FontSize="16" />
-            </DockPanel>
-            <DockPanel Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label FontSize="16" Content="Результат: " />
-            </DockPanel>
-            <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Label FontSize="16" Content="Ширина: " />
-                <TextBox Text="{Binding Width}" x:Name="TextBoxOne" FontSize="16" Margin="0,0,10,0" />
-            </DockPanel>
-            <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Label FontSize="16" Content="Глубина: " />
-                <TextBox Text="{Binding Depth}" x:Name="TextBoxTwo" FontSize="16" Margin="0,0,10,0" />
-            </DockPanel>
+                        </DockPanel>
+                        <DockPanel Name="WidthAndDepthGo" Margin="0,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Command="{Binding ButtonBegins}" Content="Начать магию" FontSize="16" />
+                        </DockPanel>
+                        <DockPanel Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label FontSize="16" Content="Результат: " />
+                        </DockPanel>
+                        <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Label FontSize="16" Content="Ширина: " />
+                            <TextBox Text="{Binding Width}" x:Name="TextBoxOne" FontSize="16" Margin="0,0,10,0" />
+                        </DockPanel>
+                        <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Label FontSize="16" Content="Глубина: " />
+                            <TextBox Text="{Binding Depth}" x:Name="TextBoxTwo" FontSize="16" Margin="0,0,10,0" />
+                        </DockPanel>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Дейкстра">
+                    <StackPanel>
+                        <TextBlock Text="Алгоритм Дейкстры" FontSize="16" HorizontalAlignment="Center"
+                       Margin="0,10,0,10" VerticalAlignment="Center" />
+                        <DockPanel>
+                            <ComboBox SelectedItem="{Binding SelectedItemDijkstraOne, Mode=TwoWay}" HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch" Margin="50,0,0,0" SelectedIndex="0" FontSize="14" Width="134.9"
+                          ItemsSource="{Binding ComboBoxList}" />
+                            <ComboBox SelectedItem="{Binding SelectedItemDijkstraTwo, Mode=TwoWay}" HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch" Margin="50,0,0,0" SelectedIndex="0" FontSize="14" Width="134.9"
+                          ItemsSource="{Binding ComboBoxList}" />
+                        </DockPanel>
+                        <DockPanel Margin="0,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Command="{Binding ButtonBegins}" Content="Начать магию" FontSize="16" />
+                        </DockPanel>
+                        <DockPanel Margin="0,10,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label FontSize="16" Content="Результат: " />
+                        </DockPanel>
+                        <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Label FontSize="16" Content="Ширина: " />
+                            <TextBox Text="{Binding Width}" FontSize="16" Margin="0,0,10,0" />
+                        </DockPanel>
+                        <DockPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Label FontSize="16" Content="Глубина: " />
+                            <TextBox Text="{Binding Depth}" FontSize="16" Margin="0,0,10,0" />
+                        </DockPanel>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
         </StackPanel>
-
     </Grid>
 </Window>

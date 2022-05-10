@@ -11,7 +11,7 @@ internal class BypassInWidth : IAlgorithm
         return _result;
     }
 
-    public void Perform(int BeginList, List<List<int>> Data)
+    public void Perform(int BeginList, List<List<int>> Data, int EndList = 0)
     {
         var width = "";
         var que = new Queue<int>();

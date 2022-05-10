@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using GraphsAlgorithms.Algorithms;
 using GraphsAlgorithms.Command;
 using GraphsAlgorithms.Model;
@@ -25,7 +26,10 @@ internal class MainViewModel : INotifyPropertyChanged
 
     public List<List<int>> DataMatrix { get; set; }
     public ObservableCollection<int> ComboBoxList { get; set; }
+    public int SelectedIndexMenu { get; set; }
     public object SelectedItemCombo { get; set; }
+    public object SelectedItemDijkstraOne { get; set; }
+    public object SelectedItemDijkstraTwo { get; set; }
     public string Width { get; set; }
     public string Depth { get; set; }
 
@@ -47,16 +51,20 @@ internal class MainViewModel : INotifyPropertyChanged
 
         foreach (var edge in graphModel.Edges)
         {
-            var one = graphModel.Vertexs.IndexOf(edge.Vertex1);
-            var two = graphModel.Vertexs.IndexOf(edge.Vertex2);
-            int weight = int.Parse(edge.Weight);
-            if (weight != 0)
+            if (SelectedIndexMenu != 0)
             {
+
+                var one = graphModel.Vertexs.IndexOf(edge.Vertex1);
+                var two = graphModel.Vertexs.IndexOf(edge.Vertex2);
+                int weight = int.Parse(edge.Weight);
                 matrix[one, two] = int.Parse(edge.Weight);
-                matrix[two, one] = int.Parse(edge.Weight);
             }
             else
             {
+
+                var one = graphModel.Vertexs.IndexOf(edge.Vertex1);
+                var two = graphModel.Vertexs.IndexOf(edge.Vertex2);
+                int weight = int.Parse(edge.Weight);
                 matrix[one, two] = 1;
                 matrix[two, one] = 1;
             }
@@ -76,36 +84,52 @@ internal class MainViewModel : INotifyPropertyChanged
 
     private void ButtonBegin(object obj)
     {
-        Width = "";
-        Depth = "";
-        if (SelectedItemCombo == null)
+        if (SelectedIndexMenu == 0)
         {
-            Width = "Выберите вершину!";
+            Width = "";
+            Depth = "";
+            if (SelectedItemCombo == null)
+            {
+                Width = "Выберите вершину!";
+                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged(nameof(Depth));
+                return;
+            }
+
+            var BeginList = int.Parse(SelectedItemCombo.ToString());
+
+
+            FillMatrix();
+            Width = WidthGo(BeginList, DataMatrix);
             OnPropertyChanged(nameof(Width));
+
+            Depth = DepthGo(BeginList, DataMatrix);
             OnPropertyChanged(nameof(Depth));
-            return;
+        }else if(SelectedIndexMenu == 1)
+        {
+            var BeginList = int.Parse(SelectedItemDijkstraOne.ToString());
+            int EndList = int.Parse(SelectedItemDijkstraTwo.ToString());
+            FillMatrix();
+            string p = Dijkstra(BeginList, DataMatrix, EndList);
+            MessageBox.Show(p);
         }
-
-        var BeginList = int.Parse(SelectedItemCombo.ToString());
-
-
-        Width = WidthGo(BeginList, DataMatrix);
-        OnPropertyChanged(nameof(Width));
-
-        Depth = DepthGo(BeginList, DataMatrix);
-        OnPropertyChanged(nameof(Depth));
     }
 
     private string WidthGo(int BeginList, List<List<int>> Data)
     {
-        _algorithms.BypassInWidth.Perform(BeginList, Data);
+        _algorithms.BypassInWidth.Perform(BeginList, Data, 0);
         return _algorithms.BypassInWidth.GetResult();
     }
 
     private string DepthGo(int BeginList, List<List<int>> Data)
     {
-        _algorithms.DetourToTheDepth.Perform(BeginList, Data);
+        _algorithms.DetourToTheDepth.Perform(BeginList, Data, 0);
         return _algorithms.DetourToTheDepth.GetResult();
+    }
+    private string Dijkstra(int BeginList, List<List<int>> Data, int EndList)
+    {
+        _algorithms.Dijkstra.Perform(BeginList, Data, EndList);
+        return _algorithms.Dijkstra.GetResult();
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

@@ -3,7 +3,7 @@ using GraphsAlgorithms.Model.Graph;
 
 namespace GraphsAlgorithms.Model;
 
-internal class GraphElipse
+class GraphElipse
 {
     public GraphElipse(Vertex v, double x, double y, string text, double radius = 15)
     {
