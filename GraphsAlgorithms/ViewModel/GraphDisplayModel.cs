@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -13,7 +14,7 @@ using GraphsAlgorithms.Model.Graph;
 
 namespace GraphsAlgorithms.ViewModel;
 
-internal class GraphDisplayModel : INotifyPropertyChanged
+class GraphDisplayModel : INotifyPropertyChanged
 {
     private readonly GraphModel _graph;
     private DelegateCommand _leftMouseClick;
@@ -57,18 +58,27 @@ internal class GraphDisplayModel : INotifyPropertyChanged
         Edge point;
         if ((point = ElipseTools.PointInText(_graph, mousePos)) != null)
             foreach (var edge in Edges)
+            {
                 if (edge.Vertex1 == point.Vertex1 && edge.Vertex2 == point.Vertex2)
                 {
+                    Edge temp = null;
+                    temp = _graph.Edges.FirstOrDefault(x =>
+                    x.Vertex1 == point.Vertex2 & x.Vertex2 == point.Vertex1);
+                    if (temp != null)
+                    {
+                        Edges.Remove(temp);
+                        _graph.AddEdge(temp.Vertex1, temp.Vertex2, float.Parse(point.Weight));
+                    }
                     Edges.Remove(edge);
                     _graph.AddEdge(point.Vertex1, point.Vertex2, float.Parse(point.Weight));
-                    OnPropertyChanged(nameof(edge.Weight));
                     Service.mw.FillMatrix();
                     return;
                 }
+            }
 
-        foreach (var Elipse in Elipses)
+            foreach (var Elipse in Elipses)
             if (ElipseTools.PointInElipse(mousePos, Elipse.MainVertex.X, Elipse.MainVertex.Y,
-                    Elipse.Radius)) //нажали на элипс
+                    Elipse.Radius))
             {
                 if (!InLineMode)
                 {
@@ -84,7 +94,24 @@ internal class GraphDisplayModel : INotifyPropertyChanged
                     if (Elipse == OneGraphElipseMemory) return;
 
                     TwoGraphElipseMemory = Elipse;
-                    _graph.AddEdge(OneGraphElipseMemory.MainVertex, TwoGraphElipseMemory.MainVertex, 0);
+                    Edge check = null;
+                    check = _graph.Edges.FirstOrDefault(x =>
+                    x.Vertex1 == OneGraphElipseMemory.MainVertex & x.Vertex2 == TwoGraphElipseMemory.MainVertex
+                    );
+                    if(check != null)
+                    {
+                        ClearMemory();
+                        MessageBox.Show("Этот путь уже существует!");
+                        return;
+                    }
+                    Edge temp = null;
+                    temp = _graph.Edges.FirstOrDefault(x => 
+                    x.Vertex1 == TwoGraphElipseMemory.MainVertex & x.Vertex2 == OneGraphElipseMemory.MainVertex);
+                    if(temp != null)
+                    {
+                        _graph.AddEdge(OneGraphElipseMemory.MainVertex, TwoGraphElipseMemory.MainVertex, float.Parse(temp.Weight));
+                    }
+                    else _graph.AddEdge(OneGraphElipseMemory.MainVertex, TwoGraphElipseMemory.MainVertex, 0);
 
                     DrawArrow(
                         new Point(OneGraphElipseMemory.MainVertex.X, OneGraphElipseMemory.MainVertex.Y),
@@ -98,7 +125,10 @@ internal class GraphDisplayModel : INotifyPropertyChanged
 
                 return;
             }
-
+        foreach (var edge in _graph.Edges)
+        {
+            OnPropertyChanged(nameof(edge.Weight));
+        }
         var vertex = _graph.AddVertex(mousePos);
         Elipses.Add(new GraphElipse(vertex, mousePos.X, mousePos.Y, _graph.Vertexs.Count.ToString()));
         OnPropertyChanged(nameof(Elipses));
@@ -137,6 +167,8 @@ internal class GraphDisplayModel : INotifyPropertyChanged
     private void ClearMemory()
     {
         OneGraphElipseMemory = null;
+        OneTextBox = "";
+        TwoTextBox = "";
         TwoGraphElipseMemory = null;
         InLineMode = false;
     }

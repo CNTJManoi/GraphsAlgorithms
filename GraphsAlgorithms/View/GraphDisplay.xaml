@@ -53,7 +53,7 @@
                                 <LineGeometry StartPoint="{Binding BeginPoint}" EndPoint="{Binding EndPoint}" />
                             </Path.Data>
                         </Path>
-                        <TextBox Text="{Binding Weight}" Margin="{Binding GetMarginCenter}" Background="#00000000"
+                        <TextBox  FontSize="24" Foreground="Red" Text="{Binding Weight}" Margin="{Binding GetMarginCenter}" Background="#00000000"
                                  BorderBrush="#00000000" />
                     </Grid>
                 </DataTemplate>
@@ -91,9 +91,9 @@
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
             <Label Content="Вершина от " HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
-            <TextBlock Text="{Binding OneTextBox}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18"/>
+            <TextBlock Text="{Binding OneTextBox}" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Label Content=" к " FontSize="18"/>
-            <TextBlock Text="{Binding TwoTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
+            <TextBlock Text="{Binding TwoTextBox}" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

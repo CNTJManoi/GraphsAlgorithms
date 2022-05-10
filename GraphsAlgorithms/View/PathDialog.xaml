@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Изменение данных" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="Изменение данных" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock>Введите стоимость пути:</TextBlock>
-        <TextBox Name="pathBox" Grid.Row="1" MinWidth="250">Значение</TextBox>
+        <TextBox Name="pathBox" Grid.Row="1" MinWidth="250">0</TextBox>
 
         <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0,15,0,0">
             <Button IsDefault="True" Click="Accept_Click" MinWidth="60" Margin="0,0,10,0">OK</Button>
